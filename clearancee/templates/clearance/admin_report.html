@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Report{% endblock %}
+
+{% block content %}
+<h1>Admin Report</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Form ID</th>
+            <th>Student</th>
+            <th>Status</th>
+            <th>Comments</th>
+            <th>Generated At</th>
+            <th>Signatures</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for form in clearance_forms %}
+            <tr>
+                <td>{{ form.id }}</td>
+                <td>{{ form.student.user.username }}</td>
+                <td>{{ form.status }}</td>
+                <td>{{ form.comments }}</td>
+                <td>{{ form.generated_at }}</td>
+                <td>
+                    {% for signature in form.signature_set.all %}
+                        <p>{{ signature.signed_by.username }} at {{ signature.signed_at }}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
